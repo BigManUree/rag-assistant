@@ -40,11 +40,18 @@ streamlit run app.py
 python ingest.py
 ```
 
+## 查看知识库内容
+
+- 网页：左侧栏「知识库浏览」——文档清单、逐块查看、关键词过滤、导出 txt、删除文档
+- 命令行：`python list_docs.py [--chunks] [--doc <文件名>] [--json]`
+
 ## 目录结构
 
 | 路径 | 说明 |
 |---|---|
-| `app.py` | Streamlit 界面 |
+| `app.py` | Streamlit 界面（问答主页） |
+| `pages/1_知识库浏览.py` | 知识库浏览页：文档清单、逐块查看、关键词过滤、导出与删除 |
+| `list_docs.py` | 命令行查看知识库（汇总 / 逐块 / JSON） |
 | `ingest.py` | 命令行批量导入 |
 | `src/config.py` | 配置与模型客户端 |
 | `src/document_loader.py` | 文档解析与切分 |
