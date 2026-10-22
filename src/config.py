@@ -12,15 +12,22 @@ CHROMA_DIR = ROOT_DIR / "chroma_db"
 
 load_dotenv(ROOT_DIR / ".env")
 
-ZHIPU_API_KEY = os.getenv("ZHIPU_API_KEY", "")
-CHAT_MODEL = os.getenv("CHAT_MODEL", "glm-4-flash")
-EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "embedding-3")
+# 兼容旧变量名：优先 LLM_API_KEY，回退 ZHIPU_API_KEY
+API_KEY = os.getenv("LLM_API_KEY") or os.getenv("ZHIPU_API_KEY", "")
+# 兼容旧引用（app.py / ingest.py 里的 ZHIPU_API_KEY 仍可用）
+ZHIPU_API_KEY = API_KEY
+BASE_URL = os.getenv(
+    "LLM_BASE_URL",
+    "https://llm-yap5kdvz9nxvcgck.cn-beijing.maas.aliyuncs.com/compatible-mode/v1",
+)
+CHAT_MODEL = os.getenv("CHAT_MODEL", "qwen3.8-flash")
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "qwen3.7-text-embedding-flash")
 
-# 智谱提供 OpenAI 兼容接口，直接用 openai SDK 即可
+# 阿里云百炼 MaaS 提供 OpenAI 兼容接口，直接用 openai SDK 即可
 client = OpenAI(
     # SDK 不接受空 key，未配置时用占位值，由 app.py/ingest.py 在调用前检查
-    api_key=ZHIPU_API_KEY or "missing-credentials",
-    base_url="https://open.bigmodel.cn/api/paas/v4/",
+    api_key=API_KEY or "missing-credentials",
+    base_url=BASE_URL,
 )
 
 # 切分参数：面试常考点——chunk 太大噪声多、太小语义不完整；overlap 避免句子被切断

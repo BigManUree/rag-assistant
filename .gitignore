@@ -1,6 +1,10 @@
 .venv/
 .env
+.env.bak*
 chroma_db/
+chroma_db.bak*/
 __pycache__/
+*.log
+*.err
 data/*
 !data/.gitkeep

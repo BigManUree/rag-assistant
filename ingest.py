@@ -13,7 +13,7 @@ SUPPORTED = {".pdf", ".txt", ".md"}
 
 def main():
     if not ZHIPU_API_KEY or ZHIPU_API_KEY == "your_key_here":
-        raise SystemExit("请先在 .env 中配置 ZHIPU_API_KEY（参考 .env.example）")
+        raise SystemExit("请先在 .env 中配置 LLM_API_KEY（参考 .env.example）")
 
     files = [p for p in DATA_DIR.iterdir() if p.suffix.lower() in SUPPORTED]
     if not files:

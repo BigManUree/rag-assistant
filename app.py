@@ -16,7 +16,7 @@ st.set_page_config(page_title="RAG 知识库问答", page_icon="📚")
 st.title("📚 RAG 知识库问答助手")
 
 if not ZHIPU_API_KEY or ZHIPU_API_KEY == "your_key_here":
-    st.error("未检测到 ZHIPU_API_KEY，请先在项目根目录 .env 文件中配置后重启。")
+    st.error("未检测到 LLM_API_KEY，请先在项目根目录 .env 文件中配置后重启。")
     st.stop()
 
 # --- 侧边栏：上传与知识库状态 ---

@@ -9,13 +9,13 @@
    │  pypdf 解析
    ▼
 文本切分（RecursiveCharacterTextSplitter，chunk=500，overlap=80）
-   │  智谱 embedding-3 向量化
+   │  阿里云百炼 qwen3.7-text-embedding-flash 向量化（分批，单批 ≤20）
    ▼
 Chroma 向量库（本地持久化，余弦相似度）
    │  用户提问 -> 向量检索 Top-4
    ▼
 Prompt 组装（检索片段 + 最近 3 轮对话历史）
-   │  GLM-4-Flash，temperature=0.3，流式输出
+   │  qwen3.8-flash，temperature=0.3，流式输出
    ▼
 带 [1][2] 引用的回答 + 来源面板
 ```
@@ -28,7 +28,7 @@ pip install -r requirements.txt
 
 # 2. 配置 API Key
 cp .env.example .env
-# 编辑 .env 填入 ZHIPU_API_KEY（https://open.bigmodel.cn 免费注册）
+# 编辑 .env 填入 LLM_API_KEY 与 LLM_BASE_URL（阿里云百炼 MaaS，OpenAI 兼容模式）
 
 # 3. 启动
 streamlit run app.py

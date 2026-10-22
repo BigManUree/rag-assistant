@@ -43,8 +43,12 @@ def answer(question: str, history: list[dict] | None = None):
         temperature=0.3,  # 问答场景调低温度，减少幻觉
     )
     for chunk in stream:
-        if delta := chunk.choices[0].delta.content:
-            yield delta
+        # 部分 OpenAI 兼容服务端会发送 choices 为空的心跳/统计块，需跳过
+        if not getattr(chunk, "choices", None):
+            continue
+        delta = chunk.choices[0].delta
+        if delta and delta.content:
+            yield delta.content
 
     # 在流末尾附带来源（yield dict 与文本区分）
     yield {"__sources__": matches}
